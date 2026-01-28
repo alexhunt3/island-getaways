@@ -1,0 +1,2454 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Winter color palette */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: rgba(30, 41, 59, 0.8);
+  --bg-card-hover: rgba(51, 65, 85, 0.9);
+  --bg-card-solid: #1e293b;
+  --border-color: rgba(148, 163, 184, 0.15);
+  --border-glow: rgba(56, 189, 248, 0.3);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --snow-light: #e0f2fe;
+  --snow-blue: #7dd3fc;
+  --snow-deep: #38bdf8;
+  --frost: rgba(186, 230, 253, 0.1);
+  --radius: 16px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 30px rgba(56, 189, 248, 0.15);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at top, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+  min-height: 100vh;
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Subtle background snowfall */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 100px 50px, rgba(255,255,255,0.15), transparent),
+    radial-gradient(2px 2px at 400px 150px, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 200px 250px, rgba(255,255,255,0.12), transparent),
+    radial-gradient(2px 2px at 600px 100px, rgba(255,255,255,0.08), transparent),
+    radial-gradient(1px 1px at 800px 200px, rgba(255,255,255,0.1), transparent),
+    radial-gradient(2px 2px at 300px 300px, rgba(255,255,255,0.08), transparent);
+  background-size: 1000px 400px;
+  animation: bgSnowfall 30s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes bgSnowfall {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 2000px; }
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ================= */
+/* Header */
+/* ================= */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2.5rem 0;
+}
+
+.header h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #f1f5f9 0%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+
+/* ================= */
+/* Loading Screen */
+/* ================= */
+.loading-screen {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  margin: -1rem;
+}
+
+/* Beach Scene */
+.beach-scene {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Loading text */
+.loading-text {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.loading-text p {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin: 0;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Sun pulse animation */
+.sun {
+  animation: sunPulse 3s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.9; }
+}
+
+/* Cloud animations */
+.cloud-1 {
+  animation: cloudFloat1 20s ease-in-out infinite;
+}
+
+.cloud-2 {
+  animation: cloudFloat2 25s ease-in-out infinite;
+}
+
+@keyframes cloudFloat1 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(50px); }
+}
+
+@keyframes cloudFloat2 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-40px); }
+}
+
+/* Wave animations */
+.wave-1 {
+  animation: waveMove1 4s ease-in-out infinite;
+}
+
+.wave-2 {
+  animation: waveMove2 5s ease-in-out infinite;
+}
+
+.wave-3 {
+  animation: waveMove3 6s ease-in-out infinite;
+}
+
+@keyframes waveMove1 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-20px); }
+}
+
+@keyframes waveMove2 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(25px); }
+}
+
+@keyframes waveMove3 {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-15px); }
+}
+
+/* Palm tree sway */
+.palm-leaf {
+  animation: palmSway 4s ease-in-out infinite;
+  transform-origin: 120px 350px;
+}
+
+.palm-2 .palm-leaf {
+  transform-origin: 700px 360px;
+}
+
+.leaf-1 { animation-delay: 0s; }
+.leaf-2 { animation-delay: 0.2s; }
+.leaf-3 { animation-delay: 0.4s; }
+.leaf-4 { animation-delay: 0.6s; }
+.leaf-5 { animation-delay: 0.8s; }
+
+@keyframes palmSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* Sailboat animation */
+.sailboat {
+  animation: sailboatMove 20s ease-in-out infinite;
+}
+
+@keyframes sailboatMove {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(50px, -5px); }
+  50% { transform: translate(100px, 0); }
+  75% { transform: translate(50px, 5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Seagull animations */
+.seagull-1 {
+  animation: seagullFly1 8s ease-in-out infinite;
+}
+
+.seagull-2 {
+  animation: seagullFly2 10s ease-in-out infinite;
+}
+
+.seagull-3 {
+  animation: seagullFly3 12s ease-in-out infinite;
+}
+
+@keyframes seagullFly1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(100px, -20px); }
+}
+
+@keyframes seagullFly2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-80px, 15px); }
+}
+
+@keyframes seagullFly3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, -10px); }
+}
+
+/* ===== GONDOLA ANIMATIONS ===== */
+/* Gondola going UP the mountain */
+.gondola-up {
+  animation: gondolaUp 12s linear infinite;
+}
+
+@keyframes gondolaUp {
+  0% { transform: translate(155px, 505px); }
+  45% { transform: translate(395px, 300px); }
+  50% { transform: translate(400px, 298px); }
+  95% { transform: translate(418px, 170px); }
+  100% { transform: translate(418px, 170px); }
+}
+
+/* Gondola going DOWN the mountain */
+.gondola-down {
+  animation: gondolaDown 12s linear infinite;
+}
+
+@keyframes gondolaDown {
+  0% { transform: translate(418px, 170px); }
+  5% { transform: translate(418px, 170px); }
+  50% { transform: translate(400px, 298px); }
+  55% { transform: translate(395px, 300px); }
+  100% { transform: translate(155px, 505px); }
+}
+
+/* ===== SKIER ANIMATIONS ===== */
+/* Skier 1 - Main trail, fast S-turns */
+.skier-1 {
+  animation: skier1Path 6s ease-in-out infinite;
+}
+
+@keyframes skier1Path {
+  0% { transform: translate(400px, 180px) rotate(5deg) scale(0.6); opacity: 0; }
+  5% { opacity: 1; }
+  15% { transform: translate(420px, 240px) rotate(12deg) scale(0.65); }
+  25% { transform: translate(380px, 300px) rotate(-12deg) scale(0.7); }
+  35% { transform: translate(415px, 360px) rotate(12deg) scale(0.75); }
+  45% { transform: translate(385px, 420px) rotate(-12deg) scale(0.8); }
+  55% { transform: translate(410px, 470px) rotate(8deg) scale(0.85); }
+  65% { transform: translate(390px, 510px) rotate(-5deg) scale(0.9); }
+  75% { transform: translate(400px, 540px) rotate(0deg) scale(0.95); }
+  85% { transform: translate(350px, 555px) rotate(-3deg) scale(1); opacity: 1; }
+  95% { transform: translate(300px, 560px) rotate(-3deg) scale(1); opacity: 0; }
+  100% { transform: translate(280px, 565px) rotate(-3deg) scale(1); opacity: 0; }
+}
+
+/* Skier 2 - Right trail, medium speed */
+.skier-2 {
+  animation: skier2Path 8s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes skier2Path {
+  0% { transform: translate(420px, 200px) rotate(8deg) scale(0.55); opacity: 0; }
+  5% { opacity: 1; }
+  20% { transform: translate(460px, 280px) rotate(15deg) scale(0.62); }
+  35% { transform: translate(490px, 360px) rotate(12deg) scale(0.7); }
+  50% { transform: translate(510px, 430px) rotate(10deg) scale(0.78); }
+  65% { transform: translate(530px, 490px) rotate(8deg) scale(0.86); }
+  80% { transform: translate(560px, 530px) rotate(5deg) scale(0.94); opacity: 1; }
+  90% { transform: translate(600px, 550px) rotate(3deg) scale(1); opacity: 0.5; }
+  100% { transform: translate(650px, 560px) rotate(0deg) scale(1); opacity: 0; }
+}
+
+/* Skier 3 - Left side, slower wide turns */
+.skier-3 {
+  animation: skier3Path 10s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+@keyframes skier3Path {
+  0% { transform: translate(380px, 220px) rotate(-5deg) scale(0.5); opacity: 0; }
+  5% { opacity: 1; }
+  20% { transform: translate(340px, 300px) rotate(-15deg) scale(0.58); }
+  35% { transform: translate(310px, 380px) rotate(-12deg) scale(0.66); }
+  50% { transform: translate(280px, 450px) rotate(-10deg) scale(0.76); }
+  65% { transform: translate(260px, 500px) rotate(-8deg) scale(0.86); }
+  80% { transform: translate(240px, 535px) rotate(-5deg) scale(0.94); opacity: 1; }
+  90% { transform: translate(200px, 555px) rotate(-3deg) scale(1); opacity: 0.5; }
+  100% { transform: translate(150px, 565px) rotate(0deg) scale(1); opacity: 0; }
+}
+
+/* ===== HELICOPTER ANIMATION ===== */
+.helicopter {
+  animation: helicopterFly 15s ease-in-out infinite;
+}
+
+@keyframes helicopterFly {
+  0% { transform: translate(-80px, 80px) scale(0.6); }
+  10% { transform: translate(100px, 70px) scale(0.65); }
+  30% { transform: translate(300px, 90px) scale(0.7); }
+  50% { transform: translate(500px, 60px) scale(0.7); }
+  70% { transform: translate(650px, 85px) scale(0.65); }
+  90% { transform: translate(850px, 70px) scale(0.6); }
+  100% { transform: translate(900px, 75px) scale(0.6); }
+}
+
+/* Helicopter main rotor spin */
+.helicopter .main-rotor {
+  animation: rotorSpin 0.1s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes rotorSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Helicopter tail rotor spin */
+.helicopter .tail-rotor {
+  animation: tailRotorSpin 0.08s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes tailRotorSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== WALKERS AT BASE ===== */
+.walker-1 {
+  animation: walker1Move 12s ease-in-out infinite;
+}
+
+@keyframes walker1Move {
+  0% { transform: translate(200px, 520px); }
+  50% { transform: translate(320px, 515px); }
+  100% { transform: translate(200px, 520px); }
+}
+
+.walker-2 {
+  animation: walker2Move 14s ease-in-out infinite;
+}
+
+@keyframes walker2Move {
+  0% { transform: translate(600px, 510px); }
+  50% { transform: translate(480px, 515px); }
+  100% { transform: translate(600px, 510px); }
+}
+
+.walker-3 {
+  animation: walker3Move 10s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+@keyframes walker3Move {
+  0% { transform: translate(350px, 525px); }
+  25% { transform: translate(420px, 520px); }
+  50% { transform: translate(500px, 518px); }
+  75% { transform: translate(420px, 522px); }
+  100% { transform: translate(350px, 525px); }
+}
+
+/* ===== SNOWFLAKE ANIMATIONS ===== */
+/* Layer 1 - Large, slow falling */
+.snowflakes-layer-1 {
+  animation: snowfall1 15s linear infinite;
+}
+
+@keyframes snowfall1 {
+  0% { transform: translateY(-50px); }
+  100% { transform: translateY(650px); }
+}
+
+/* Layer 2 - Medium, medium speed */
+.snowflakes-layer-2 {
+  animation: snowfall2 12s linear infinite;
+}
+
+@keyframes snowfall2 {
+  0% { transform: translateY(-30px) translateX(0); }
+  50% { transform: translateY(310px) translateX(20px); }
+  100% { transform: translateY(650px) translateX(0); }
+}
+
+/* Layer 3 - Detailed snowflakes, slow with rotation */
+.snowflakes-layer-3 {
+  animation: snowfall3 18s linear infinite;
+}
+
+@keyframes snowfall3 {
+  0% { transform: translateY(-40px); }
+  100% { transform: translateY(640px); }
+}
+
+.snowflake-detailed {
+  animation: snowflakeRotate 4s linear infinite;
+}
+
+@keyframes snowflakeRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-content {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  padding: 1.5rem 2rem 2rem;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.loading-message {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  min-height: 1.75rem;
+  animation: messageFade 2s ease-in-out infinite;
+}
+
+@keyframes messageFade {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.loading-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.loading-dots .dot {
+  width: 10px;
+  height: 10px;
+  background: var(--snow-blue);
+  border-radius: 50%;
+  animation: dotPulse 1.4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.loading-dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Legacy loading (fallback) */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= */
+/* Section Headers */
+/* ================= */
+.hero-section {
+  margin-bottom: 3rem;
+}
+
+.hero-section h2,
+.resorts-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-section h2::before {
+  content: '🌴';
+  font-size: 1rem;
+}
+
+/* ================= */
+/* Hero Cards - Top Picks */
+/* ================= */
+.hero-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.hero-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+.hero-card.top-pick {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, var(--bg-card) 100%);
+  box-shadow: var(--shadow-md), 0 0 40px rgba(56, 189, 248, 0.1);
+}
+
+.hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.hero-card-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hero-card-location {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ================= */
+/* Powder Badge */
+/* ================= */
+.powder-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 0.75rem;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.powder-badge.excellent {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.1) 100%);
+  color: var(--success);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.powder-badge.good {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+  color: var(--warning);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.powder-badge.fair {
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* ================= */
+/* Stats Grid */
+/* ================= */
+.hero-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* ================= */
+/* Forecast Message */
+/* ================= */
+.hero-card-forecast {
+  font-size: 0.875rem;
+  color: var(--snow-blue);
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+  border-radius: var(--radius);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+/* ================= */
+/* Flight Info */
+/* ================= */
+.hero-card-flight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius);
+  margin-top: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.flight-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.flight-details {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ================= */
+/* Filters */
+/* ================= */
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 0.625rem 1.125rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--frost);
+  color: var(--text-primary);
+  border-color: var(--border-glow);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  border-color: transparent;
+  color: #0f172a;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(56, 189, 248, 0.3);
+}
+
+/* ================= */
+/* Resort Grid */
+/* ================= */
+.resort-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.resort-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.resort-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.resort-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.875rem;
+}
+
+.resort-name {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.resort-location {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.125rem;
+}
+
+.resort-stats {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.resort-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--text-muted);
+}
+
+.resort-stat strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ================= */
+/* Snow Forecast Mini Chart */
+/* ================= */
+.forecast-mini {
+  display: flex;
+  gap: 6px;
+  margin-top: 1.25rem;
+  padding: 1rem 1rem 0.75rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.forecast-mini-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100px;
+  justify-content: flex-end;
+}
+
+.forecast-bar {
+  width: 100%;
+  max-width: 36px;
+  background: linear-gradient(180deg,
+    var(--snow-light) 0%,
+    var(--snow-blue) 40%,
+    var(--snow-deep) 100%
+  );
+  border-radius: 6px 6px 3px 3px;
+  min-height: 4px;
+  position: relative;
+  box-shadow: 0 0 12px rgba(125, 211, 252, 0.4);
+}
+
+/* No snow indicator */
+.forecast-bar.no-snow {
+  background: var(--border-color);
+  box-shadow: none;
+  opacity: 0.4;
+}
+
+/* Temperature forecast bars */
+.forecast-bar.temperature,
+.forecast-day-bar.temperature {
+  border-radius: 6px 6px 3px 3px;
+}
+
+.forecast-bar.temperature.temp-hot,
+.forecast-day-bar.temperature.temp-hot {
+  background: linear-gradient(180deg,
+    #fcd34d 0%,
+    #f59e0b 50%,
+    #ea580c 100%
+  );
+  box-shadow: 0 0 12px rgba(234, 88, 12, 0.4);
+}
+
+.forecast-bar.temperature.temp-warm,
+.forecast-day-bar.temperature.temp-warm {
+  background: linear-gradient(180deg,
+    #fde68a 0%,
+    #fcd34d 50%,
+    #f59e0b 100%
+  );
+  box-shadow: 0 0 12px rgba(252, 211, 77, 0.4);
+}
+
+.forecast-bar.temperature.temp-mild,
+.forecast-day-bar.temperature.temp-mild {
+  background: linear-gradient(180deg,
+    #bef264 0%,
+    #a3e635 50%,
+    #84cc16 100%
+  );
+  box-shadow: 0 0 12px rgba(163, 230, 53, 0.4);
+}
+
+/* Legacy sunshine bars (kept for compatibility) */
+.forecast-bar.sunshine {
+  background: linear-gradient(180deg,
+    #fcd34d 0%,
+    #f59e0b 50%,
+    #d97706 100%
+  );
+  box-shadow: 0 0 12px rgba(252, 211, 77, 0.4);
+}
+
+.forecast-bar.cloudy {
+  background: var(--border-color);
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+.forecast-day-bar.sunshine {
+  background: linear-gradient(180deg,
+    #fcd34d 0%,
+    #f59e0b 50%,
+    #d97706 100%
+  );
+  box-shadow: 0 0 8px rgba(252, 211, 77, 0.3);
+}
+
+.forecast-mini-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* ================= */
+/* Modal */
+/* ================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, transparent 100%);
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.modal-close:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* ================= */
+/* Forecast Chart (Modal) */
+/* ================= */
+.forecast-chart {
+  display: flex;
+  gap: 6px;
+  margin: 1rem 0 1.5rem;
+  padding: 1.25rem 1rem 1rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+}
+
+.forecast-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.forecast-day-bar-container {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.forecast-day-bar {
+  width: 65%;
+  max-width: 36px;
+  background: linear-gradient(180deg,
+    var(--snow-light) 0%,
+    var(--snow-blue) 40%,
+    var(--snow-deep) 100%
+  );
+  border-radius: 8px 8px 4px 4px;
+  min-height: 0;
+  position: relative;
+  box-shadow: 0 0 16px rgba(125, 211, 252, 0.5);
+}
+
+/* No snow indicator */
+.forecast-day-bar.no-snow {
+  background: var(--border-color);
+  box-shadow: none;
+  opacity: 0.3;
+}
+
+.forecast-day-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.forecast-day-snow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--snow-blue);
+  min-height: 1.125rem;
+}
+
+/* ================= */
+/* Flight Options */
+/* ================= */
+.flight-options {
+  margin-top: 1.5rem;
+}
+
+.flight-options h3 {
+  margin-bottom: 0.875rem;
+}
+
+.flight-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.15s;
+}
+
+.flight-option:hover {
+  border-color: var(--border-glow);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.flight-option-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.book-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  color: #0f172a;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-top: 1.25rem;
+  width: 100%;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.3);
+}
+
+.book-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+}
+
+/* ================= */
+/* Date Picker */
+/* ================= */
+.date-picker {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.date-input {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  flex: 1;
+  transition: all 0.15s;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+/* ================= */
+/* Error */
+/* ================= */
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+  border-radius: var(--radius);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+/* ================= */
+/* Responsive */
+/* ================= */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .hero-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .resort-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+  }
+}
+
+/* ================= */
+/* Weather Icons */
+/* ================= */
+.weather-icon {
+  color: var(--snow-blue);
+  flex-shrink: 0;
+}
+
+.weather-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ================= */
+/* Snow Animation */
+/* ================= */
+@keyframes snowfall {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 500px 1000px, 400px 400px, 300px 300px; }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.hero-card.snowing,
+.resort-card.snowing {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(125, 211, 252, 0.3);
+}
+
+.hero-card.snowing::before,
+.resort-card.snowing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image:
+    radial-gradient(3px 3px at 40px 40px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 80px 80px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 120px 30px, rgba(255,255,255,0.35), transparent),
+    radial-gradient(2px 2px at 160px 90px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 200px 50px, rgba(255,255,255,0.25), transparent);
+  background-size: 240px 120px;
+  animation: snowfall 10s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+/* Subtle glow for snowing cards */
+.hero-card.snowing::after,
+.resort-card.snowing::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-card > *,
+.resort-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ================= */
+/* Favorite Button */
+/* ================= */
+.favorite-btn {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.favorite-btn:hover {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-primary);
+  transform: scale(1.08);
+}
+
+.favorite-btn.active {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.4);
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.favorite-btn.active svg {
+  fill: #f87171;
+}
+
+.favorite-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ================= */
+/* Origin Selector */
+/* ================= */
+.origin-select {
+  padding: 0.5rem 0.75rem;
+  padding-right: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  min-width: 150px;
+  height: 36px;
+  transition: all 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+.origin-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.origin-select:hover {
+  border-color: var(--border-glow);
+}
+
+/* ================= */
+/* Scrollbar */
+/* ================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.3);
+}
+
+/* ================= */
+/* Empty State */
+/* ================= */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  font-size: 1.125rem;
+}
+
+/* ================= */
+/* Header Controls */
+/* ================= */
+.header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.origin-selector,
+.date-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+}
+
+.origin-selector label,
+.date-selector label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.date-input-small {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  width: 130px;
+  height: 36px;
+}
+
+.date-input-small:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.date-separator {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.forecast-warning {
+  cursor: help;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  opacity: 0.9;
+  position: relative;
+}
+
+.forecast-warning:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card-solid);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border: 1px solid var(--border-color);
+  z-index: 100;
+  margin-bottom: 0.5rem;
+}
+
+/* ================= */
+/* Section Header */
+/* ================= */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.view-btn:hover {
+  color: var(--text-primary);
+}
+
+.view-btn.active {
+  background: var(--accent);
+  color: #0f172a;
+}
+
+/* ================= */
+/* Filters Row */
+/* ================= */
+.filters-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters-right {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sort-select {
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.compare-btn.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  border-color: transparent;
+}
+
+/* ================= */
+/* Advanced Filters */
+/* ================= */
+.advanced-filters {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 140px;
+}
+
+.filter-group label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.filter-group input[type="range"] {
+  width: 100%;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  -webkit-appearance: none;
+}
+
+.filter-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.filter-group span {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.filter-group select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+}
+
+.filter-reset {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-reset:hover {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #f87171;
+}
+
+/* ================= */
+/* Compare Mode */
+/* ================= */
+.resort-card.compare-mode {
+  cursor: pointer;
+}
+
+.resort-card.comparing {
+  border-color: #8b5cf6;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, var(--bg-card) 100%);
+}
+
+.compare-checkbox {
+  position: absolute;
+  top: 0.875rem;
+  right: 0.875rem;
+  width: 24px;
+  height: 24px;
+  color: var(--text-muted);
+  z-index: 10;
+}
+
+.resort-card.comparing .compare-checkbox {
+  color: #8b5cf6;
+}
+
+.compare-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%);
+  border-radius: var(--radius);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  margin-bottom: 1rem;
+}
+
+.compare-items {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.compare-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+}
+
+.compare-item button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.compare-item button:hover {
+  color: #f87171;
+}
+
+.compare-action {
+  padding: 0.625rem 1.25rem;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  border: none;
+  border-radius: 100px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.compare-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.compare-action:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+/* ================= */
+/* Compare Modal */
+/* ================= */
+.compare-modal {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.compare-table-wrapper {
+  overflow-x: auto;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.compare-table th {
+  background: rgba(15, 23, 42, 0.5);
+  position: sticky;
+  top: 0;
+}
+
+.compare-resort-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.compare-resort-location {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.compare-table td.stat-label {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.compare-table td.best-value {
+  color: var(--success);
+  font-weight: 600;
+  position: relative;
+}
+
+.best-badge {
+  display: inline-block;
+  margin-left: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  background: rgba(52, 211, 153, 0.2);
+  border-radius: 4px;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.terrain-bars {
+  display: flex;
+  gap: 2px;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.terrain-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: white;
+}
+
+.terrain-bar.beginner {
+  background: #22c55e;
+}
+
+.terrain-bar.intermediate {
+  background: #3b82f6;
+}
+
+.terrain-bar.advanced {
+  background: #1e1e1e;
+}
+
+.compare-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.legend-item .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-item .dot.beginner {
+  background: #22c55e;
+}
+
+.legend-item .dot.intermediate {
+  background: #3b82f6;
+}
+
+.legend-item .dot.advanced {
+  background: #1e1e1e;
+}
+
+/* ================= */
+/* Snow Quality Indicator */
+/* ================= */
+.snow-quality {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 100px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+}
+
+.snow-quality.powder-champagne {
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.3) 0%, rgba(186, 230, 253, 0.2) 100%);
+  color: #e0f2fe;
+  border: 1px solid rgba(224, 242, 254, 0.4);
+}
+
+.snow-quality.powder-light {
+  background: rgba(125, 211, 252, 0.15);
+  color: var(--snow-blue);
+  border: 1px solid rgba(125, 211, 252, 0.3);
+}
+
+.snow-quality.powder-packed {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.snow-quality.powder-wet {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* ================= */
+/* Resort Card Flight */
+/* ================= */
+.resort-flight {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.flight-price-small {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.flight-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ================= */
+/* Map View */
+/* ================= */
+.map-container {
+  position: relative;
+  height: 600px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: var(--text-muted);
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  z-index: 1000;
+}
+
+.map-legend .legend-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.map-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.map-legend .legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.map-legend .legend-dot.excellent {
+  background: #34d399;
+}
+
+.map-legend .legend-dot.good {
+  background: #fbbf24;
+}
+
+.map-legend .legend-dot.fair {
+  background: #64748b;
+}
+
+/* Custom map markers */
+.custom-marker-container {
+  background: none !important;
+  border: none !important;
+}
+
+.map-marker {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-card-solid);
+  border: 2px solid #64748b;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s;
+}
+
+.map-marker:hover {
+  transform: rotate(-45deg) scale(1.1);
+}
+
+.map-marker.excellent {
+  border-color: #34d399;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+}
+
+.map-marker.good {
+  border-color: #fbbf24;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+}
+
+.map-marker.favorite {
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.marker-score {
+  transform: rotate(45deg);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Map popup styles */
+.custom-popup .leaflet-popup-content-wrapper {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.map-popup {
+  padding: 1rem;
+  min-width: 180px;
+}
+
+.map-popup h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.map-popup .popup-location {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.map-popup .popup-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.map-popup .popup-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-popup .popup-stat strong {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.map-popup .popup-stat span {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.map-popup .popup-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #0f172a;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.map-popup .popup-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* ================= */
+/* Responsive Updates */
+/* ================= */
+/* ================= */
+/* Resort Details (Modal) */
+/* ================= */
+.resort-details {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.resort-details h3 {
+  margin-bottom: 1rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  text-align: center;
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.detail-value {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.detail-label {
+  display: block;
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 0.25rem;
+}
+
+.terrain-breakdown {
+  margin-top: 1rem;
+}
+
+.terrain-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.terrain-bars-large {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.terrain-bars-large .terrain-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.terrain-bars-large .terrain-bar span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.terrain-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.terrain-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.terrain-legend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.terrain-legend .dot.beginner {
+  background: #22c55e;
+}
+
+.terrain-legend .dot.intermediate {
+  background: #3b82f6;
+}
+
+.terrain-legend .dot.advanced {
+  background: #1e1e1e;
+}
+
+.pass-tier {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.pass-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pass-badge.full {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.pass-badge.base {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.season-dates {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* Price range badges for islands */
+.pass-badge.budget {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.1) 100%);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.pass-badge.moderate {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.pass-badge.expensive {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Hurricane risk indicators */
+.detail-value.risk-low {
+  color: #22c55e;
+}
+
+.detail-value.risk-moderate {
+  color: #fbbf24;
+}
+
+.detail-value.risk-high {
+  color: #ef4444;
+}
+
+/* Activities Section */
+.activities-section {
+  margin-top: 1rem;
+}
+
+.activities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.activity-badge {
+  padding: 0.375rem 0.75rem;
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+/* Beaches Section */
+.beaches-section {
+  margin-top: 1rem;
+}
+
+.beaches-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.beach-item {
+  padding: 0.375rem 0.75rem;
+  background: rgba(252, 211, 77, 0.1);
+  color: #fcd34d;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  border: 1px solid rgba(252, 211, 77, 0.2);
+}
+
+/* Best For Section */
+.best-for-section {
+  margin-top: 1rem;
+}
+
+.best-for-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.best-for-tag {
+  padding: 0.25rem 0.625rem;
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+/* Activities mini display for compare modal */
+.activities-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.activities-mini span:not(:last-child)::after {
+  content: ',';
+}
+
+/* Historical Context Badge */
+.historical-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.historical-badge.above-avg-high {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--success);
+}
+
+.historical-badge.above-avg {
+  background: rgba(125, 211, 252, 0.15);
+  color: var(--snow-blue);
+}
+
+.historical-badge.avg {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+}
+
+.historical-badge.below-avg {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--warning);
+}
+
+/* ================= */
+/* Responsive Updates */
+/* ================= */
+@media (max-width: 768px) {
+  .header-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .date-selector {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .filters-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-right {
+    justify-content: space-between;
+  }
+
+  .advanced-filters {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .compare-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .map-container {
+    height: 450px;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
