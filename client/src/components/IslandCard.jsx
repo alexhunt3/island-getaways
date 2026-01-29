@@ -55,10 +55,19 @@ export function IslandCard({ island, onClick, compareMode, isComparing }) {
       {weather && (
         <>
           <div className="resort-stats">
-            <div className="resort-stat">
-              <strong>{formatSunshineHours(weather.forecast.totalSunshineHours)}</strong>
-              <span>sun</span>
-            </div>
+            {(() => {
+              const avgUV = weather.forecast.daily?.length
+                ? weather.forecast.daily.reduce((sum, d) => sum + (d.uvIndex || 0), 0) / weather.forecast.daily.length
+                : 0;
+              return (
+                <div className="resort-stat">
+                  <strong className={getUVRating(avgUV)?.class}>
+                    {avgUV.toFixed(1)}
+                  </strong>
+                  <span>avg UV</span>
+                </div>
+              );
+            })()}
             <div className="resort-stat">
               <strong>{weather.forecast.avgRainChance}%</strong>
               <span>rain</span>
@@ -69,14 +78,6 @@ export function IslandCard({ island, onClick, compareMode, isComparing }) {
               )}
               <strong>{weather.current.temperature}°F</strong>
             </div>
-            {weather.current.uvIndex !== undefined && (
-              <div className="resort-stat">
-                <strong className={getUVRating(weather.current.uvIndex)?.class}>
-                  {Math.round(weather.current.uvIndex)}
-                </strong>
-                <span>UV</span>
-              </div>
-            )}
           </div>
 
           <div className="forecast-mini">
