@@ -29,16 +29,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Serve static files from React build in production
-if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = join(__dirname, '../client/dist');
-  app.use(express.static(clientBuildPath));
-
-  // Handle React Router - serve index.html for all non-API routes
-  app.get('*', (req, res) => {
-    res.sendFile(join(clientBuildPath, 'index.html'));
+// In production with separate static site, just return API info for root
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Island Getaways API',
+    endpoints: ['/api/health', '/api/islands', '/api/islands/forecasts', '/api/trips/recommendations']
   });
-}
+});
 
 // Error handling
 app.use((err, req, res, next) => {
