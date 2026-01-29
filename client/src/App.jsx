@@ -138,7 +138,8 @@ export default function App() {
     minSunshine: 0,
     minBeachScore: 0,
     hurricaneRisk: 'all', // 'all', 'low', 'moderate', 'high'
-    bestFor: 'all'
+    bestFor: 'all',
+    maxUV: 'all' // 'all', 'low', 'moderate', 'high'
   });
   const [showFilters, setShowFilters] = useState(false);
 
@@ -186,11 +187,18 @@ export default function App() {
       const beachScore = t.weather?.beachScore || 0;
       const hurricaneRisk = t.island.hurricaneRisk || 'moderate';
       const bestForList = t.island.bestFor || [];
+      const avgUV = t.weather?.forecast?.daily?.length
+        ? t.weather.forecast.daily.reduce((sum, d) => sum + (d.uvIndex || 0), 0) / t.weather.forecast.daily.length
+        : 0;
 
       if (sunshine < filters.minSunshine) return false;
       if (beachScore < filters.minBeachScore) return false;
       if (filters.hurricaneRisk !== 'all' && hurricaneRisk !== filters.hurricaneRisk) return false;
       if (filters.bestFor !== 'all' && !bestForList.includes(filters.bestFor)) return false;
+
+      // UV filter: low (0-5), moderate (5-7), high (7+)
+      if (filters.maxUV === 'low' && avgUV > 5) return false;
+      if (filters.maxUV === 'moderate' && avgUV > 7) return false;
 
       return true;
     });
@@ -220,7 +228,8 @@ export default function App() {
     filters.minSunshine > 0,
     filters.minBeachScore > 0,
     filters.hurricaneRisk !== 'all',
-    filters.bestFor !== 'all'
+    filters.bestFor !== 'all',
+    filters.maxUV !== 'all'
   ].filter(Boolean).length;
 
   return (
@@ -430,9 +439,22 @@ export default function App() {
                   </select>
                 </div>
 
+                <div className="filter-group">
+                  <label>Max UV Index</label>
+                  <select
+                    value={filters.maxUV}
+                    onChange={e => setFilters(prev => ({ ...prev, maxUV: e.target.value }))}
+                  >
+                    <option value="all">Any UV Level</option>
+                    <option value="low">Low (UV 0-5)</option>
+                    <option value="moderate">Moderate (UV 5-7)</option>
+                    <option value="high">High (UV 7+)</option>
+                  </select>
+                </div>
+
                 <button
                   className="filter-reset"
-                  onClick={() => setFilters({ minSunshine: 0, minBeachScore: 0, hurricaneRisk: 'all', bestFor: 'all' })}
+                  onClick={() => setFilters({ minSunshine: 0, minBeachScore: 0, hurricaneRisk: 'all', bestFor: 'all', maxUV: 'all' })}
                 >
                   Reset Filters
                 </button>

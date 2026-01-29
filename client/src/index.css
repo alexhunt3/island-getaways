@@ -2307,6 +2307,27 @@ body::before {
   color: #ef4444;
 }
 
+/* UV Index Colors */
+.uv-low {
+  color: #22c55e;
+}
+
+.uv-moderate {
+  color: #fbbf24;
+}
+
+.uv-high {
+  color: #f97316;
+}
+
+.uv-very-high {
+  color: #ef4444;
+}
+
+.uv-extreme {
+  color: #dc2626;
+}
+
 /* Activities Section */
 .activities-section {
   margin-top: 1rem;

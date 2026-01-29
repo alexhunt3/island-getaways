@@ -1,4 +1,4 @@
-import { formatSunshineHours, getBeachRating } from '../services/api';
+import { formatSunshineHours, getBeachRating, getUVRating } from '../services/api';
 import { WeatherIcon } from './WeatherIcon';
 
 export function IslandCard({ island, onClick, compareMode, isComparing }) {
@@ -69,6 +69,14 @@ export function IslandCard({ island, onClick, compareMode, isComparing }) {
               )}
               <strong>{weather.current.temperature}°F</strong>
             </div>
+            {weather.current.uvIndex !== undefined && (
+              <div className="resort-stat">
+                <strong className={getUVRating(weather.current.uvIndex)?.class}>
+                  {Math.round(weather.current.uvIndex)}
+                </strong>
+                <span>UV</span>
+              </div>
+            )}
           </div>
 
           <div className="forecast-mini">
