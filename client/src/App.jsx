@@ -9,6 +9,7 @@ import { MapView } from './components/MapView';
 
 const ORIGIN_AIRPORTS = {
   nyc: { label: 'New York (NYC)', airports: ['JFK', 'LGA', 'EWR'] },
+  dca: { label: 'Washington DC (DCA)', airports: ['DCA', 'IAD', 'BWI'] },
   lax: { label: 'Los Angeles (LAX)', airports: ['LAX', 'BUR', 'SNA'] },
   chi: { label: 'Chicago (ORD)', airports: ['ORD', 'MDW'] },
   dfw: { label: 'Dallas (DFW)', airports: ['DFW', 'DAL'] },

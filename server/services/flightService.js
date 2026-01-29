@@ -8,6 +8,7 @@ let amadeus = null;
 // Origin airport configurations
 export const ORIGIN_AIRPORTS = {
   nyc: { label: 'New York (NYC)', airports: ['JFK', 'LGA', 'EWR'] },
+  dca: { label: 'Washington DC (DCA)', airports: ['DCA', 'IAD', 'BWI'] },
   lax: { label: 'Los Angeles (LAX)', airports: ['LAX', 'BUR', 'SNA'] },
   chi: { label: 'Chicago (ORD)', airports: ['ORD', 'MDW'] },
   dfw: { label: 'Dallas (DFW)', airports: ['DFW', 'DAL'] },
@@ -176,6 +177,7 @@ function getBasePrice(destination, originKey = 'nyc') {
   // Adjust prices based on origin city
   const adjustments = {
     nyc: 0,
+    dca: 10, // DC prices similar to NYC, slightly higher
     lax: destination.startsWith('Y') ? 100 : (destination === 'MMH' || destination === 'RNO') ? -100 : 20,
     chi: destination === 'DEN' ? -30 : destination.startsWith('Y') ? -50 : 10,
     dfw: destination === 'DEN' ? -50 : destination === 'ABQ' ? -80 : 30,
