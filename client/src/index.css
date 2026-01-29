@@ -1943,6 +1943,19 @@ body::before {
 .map {
   width: 100%;
   height: 100%;
+  z-index: 1;
+}
+
+/* Fix Leaflet tile positioning */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.leaflet-tile-pane {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .map-loading {

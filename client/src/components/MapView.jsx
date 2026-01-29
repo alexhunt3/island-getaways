@@ -68,9 +68,9 @@ export function MapView({ trips, onSelectIsland }) {
     const map = mapInstanceRef.current;
 
     // Invalidate map size to handle container resize issues
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 100);
+    map.invalidateSize();
+    setTimeout(() => map.invalidateSize(), 100);
+    setTimeout(() => map.invalidateSize(), 500);
 
     // Clear existing markers
     markersRef.current.forEach(marker => marker.remove());
